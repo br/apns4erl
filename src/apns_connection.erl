@@ -229,8 +229,12 @@ handle_info( {ssl, SslSocket, Data}
           case Status of 
               invalid_token -> 
                   ErrorLoggerFun("The failed message is [~p]", [MsgFailed]),
-                  DeviceToken = MsgFailed#apns_msg.device_token,
-                  call(DeleteSubscription, [{ok, DeviceToken}]);
+                  case MsgFailed of 
+                    undefined -> ok;
+                    _ ->    
+                      DeviceToken = MsgFailed#apns_msg.device_token,
+                      call(DeleteSubscription, [{ok, DeviceToken}])
+                    end;
               _ -> ok
           end,
           [send_message(self(), M) || M <- RestMsg],
