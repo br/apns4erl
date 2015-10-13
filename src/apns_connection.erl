@@ -228,6 +228,7 @@ handle_info( {ssl, SslSocket, Data}
           {MsgFailed, RestMsg} = apns_queue:fail(State#state.queue, MsgId),
           case Status of 
               invalid_token -> 
+                  ErrorLoggerFun("The failed message is [~p]", [MsgFailed]),
                   DeviceToken = MsgFailed#apns_msg.device_token,
                   call(DeleteSubscription, [{ok, DeviceToken}]);
               _ -> ok
