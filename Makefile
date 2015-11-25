@@ -4,7 +4,7 @@ CONFIG?=priv/app.config
 
 DEPS = jiffy sync katana eper
 dep_jiffy = git https://github.com/davisp/jiffy 0.13.3
-dep_sync = git https://github.com/inaka/sync.git 0.1
+dep_sync = git https://github.com/br/sync.git 0.1
 dep_katana =  git https://github.com/inaka/erlang-katana 0.2.0
 dep_eper = git https://github.com/massemanet/eper.git 0.90.0
 
