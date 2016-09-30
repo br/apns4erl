@@ -34,7 +34,7 @@
 %% @doc  Sends a message to apple through the connection
 -spec send_message(apns:conn_id(), apns:msg()) -> ok.
 send_message(ConnId, Msg) ->
-  io:fwrite(Msg),
+  io:fwrite("~p~n", Msg),
   gen_server:cast(ConnId, Msg).
 
 %% @doc  Stops the connection
