@@ -34,7 +34,6 @@
 %% @doc  Sends a message to apple through the connection
 -spec send_message(apns:conn_id(), apns:msg()) -> ok.
 send_message(ConnId, Msg) ->
-  io:fwrite("~p~n", Msg),
   gen_server:cast(ConnId, Msg).
 
 %% @doc  Stops the connection
@@ -195,6 +194,7 @@ handle_cast(Msg, State) when is_record(Msg, apns_msg) ->
       Connection = State#state.connection,
       Timeout = epoch() + Connection#apns_connection.expires_conn,
       Payload = build_payload(Msg),
+      io:fwrite("~p~n", [Msg]),
       BinToken = hexstr_to_bin(Msg#apns_msg.device_token),
       apns_queue:in(State#state.queue, Msg),
       case send_payload(State, Msg#apns_msg.id, Msg#apns_msg.expiry,
