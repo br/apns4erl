@@ -66,7 +66,7 @@ build_payload(Msg) ->
     [ {alert, Alert}
     , {badge, Badge}
     , {category, Category}
-    , {<<"mutable-content">>, Mutable_Content}
+    , {'mutable-content', Mutable_Content}
     , {sound, Sound}] ++ Apns_Extra, Extra, Content_Available).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
