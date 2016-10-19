@@ -66,8 +66,8 @@ build_payload(Msg) ->
     [ {alert, Alert}
     , {badge, Badge}
     , {category, Category}
-    , {sound, Sound},
-    , {<<"mutable-content">>, Mutable_Content}] ++ Apns_Extra, Extra, Content_Available).
+    , {<<"mutable-content">>, Mutable_Content}
+    , {sound, Sound}] ++ Apns_Extra, Extra, Content_Available).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Server implementation, a.k.a.: callbacks
