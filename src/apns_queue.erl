@@ -11,7 +11,7 @@
 
 -behaviour(gen_server).
 
--define(DEFAULT_MAX_ENTRIES, 1000).
+-define(DEFAULT_MAX_ENTRIES, 10000).
 
 -export([
     start_link/0,
