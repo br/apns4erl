@@ -57,9 +57,9 @@ build_payload(Msg) ->
   #apns_msg{ alert = Alert
            , badge = Badge
            , sound = Sound
-           , 'mutable-content' = Mutable_Content
+           , mutable_content = Mutable_Content
            , category = Category
-           , apns_extra=Apns_Extra
+           , apns_extra = Apns_Extra
            , content_available = Content_Available
            , extra = Extra} = Msg,
   build_payload(
