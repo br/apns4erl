@@ -126,11 +126,7 @@ minimal(Config) ->
         {<<"acme3">>, {[{<<"acme4">>, false}]}}]),
   monitor_process_for_a_second(Ref),
 
-<<<<<<< HEAD
-  ok = apns:send_message(?TEST_CONNECTION, #apns_msg{device_token = ?DEVICE_TOKEN,
-=======
   ok = apns:send_message(minimal, #apns_msg{device_token = ?DEVICE_TOKEN,
->>>>>>> ee35b81e299c6bc776c0bc01661c0c407d07a84e
                                  sound = "chime",
                                  badge = 12,
                                  expiry = apns:expiry(86400),
