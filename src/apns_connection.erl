@@ -56,7 +56,6 @@ start_link(Connection) ->
 build_payload(Msg) ->
   #apns_msg{ alert = Alert
            , badge = Badge
-           , mutable_content = Mutable_Content
            , sound = Sound
            , category = Category
            , apns_extra = Apns_Extra
@@ -66,7 +65,6 @@ build_payload(Msg) ->
     [ {alert, Alert}
     , {badge, Badge}
     , {category, Category}
-    , {'mutable-content', Mutable_Content}
     , {sound, Sound}] ++ Apns_Extra, Extra, Content_Available).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
