@@ -200,7 +200,7 @@ handle_cast(Msg, State) when is_record(Msg, apns_msg) ->
                         BinToken, Payload, Msg#apns_msg.priority) of
         ok ->
           {noreply, State#state{out_expires = Timeout}};
-      {error, Reason} -> 
+      {error, Reason} ->
         apns_queue:fail(State#state.queue, Msg#apns_msg.id),
         {stop, {error, Reason}, State}
     end
@@ -226,12 +226,12 @@ handle_info( {ssl, SslSocket, Data}
         8 -> %% Error
           Status = parse_status(StatusCode),
           {MsgFailed, RestMsg} = apns_queue:fail(State#state.queue, MsgId),
-          case Status of 
-              invalid_token -> 
+          case Status of
+              invalid_token ->
                   ErrorLoggerFun("The failed message is [~p]", [MsgFailed]),
-                  case MsgFailed of 
+                  case MsgFailed of
                     undefined -> ok;
-                    _ ->    
+                    _ ->
                       DeviceToken = MsgFailed#apns_msg.device_token,
                       call(DeleteSubscription, [{ok, DeviceToken}])
                     end;
@@ -378,6 +378,20 @@ do_build_payload([{Key, Value} | Params], Payload) ->
                     lists:map(fun unicode:characters_to_binary/1, Args)}
                 ]},
       do_build_payload(Params, [{atom_to_binary(Key, utf8), Json} | Payload]);
+    #{body := Body,
+              title := Title} ->
+      Json = {case Body of
+                none -> [];
+                nil -> [];
+                Body -> [{<<"body">>, unicode:characters_to_binary(Body)}]
+              end ++ case Title of
+                       none -> [];
+                       nil -> [];
+                       Title ->
+                        [{<<"title">>,
+                          unicode:characters_to_binary(Title)}]
+                     end},
+      do_build_payload(Params, [{atom_to_binary(Key, utf8), Json} | Payload]);
     _ ->
       do_build_payload(Params, Payload)
   end;
@@ -441,7 +455,7 @@ parse_status(_) -> unknown.
 %
 build_frame(MsgId, Expiry, BinToken, Payload, Priority) ->
   PayloadLength = erlang:size(Payload),
-  <<1:8, 32:16/big, BinToken/binary, 
+  <<1:8, 32:16/big, BinToken/binary,
     2:8, PayloadLength:16/big, Payload/binary,
     3:8, 4:16/big, MsgId/binary,
     4:8, 4:16/big, Expiry:4/big-unsigned-integer-unit:8,
@@ -455,4 +469,3 @@ call(Fun, Args) when is_function(Fun), is_list(Args) ->
     apply(Fun, Args);
 call({M, F}, Args) when is_list(Args) ->
     apply(M, F, Args).
-
