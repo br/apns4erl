@@ -194,6 +194,7 @@ handle_cast(Msg, State) when is_record(Msg, apns_msg) ->
       Connection = State#state.connection,
       Timeout = epoch() + Connection#apns_connection.expires_conn,
       Payload = build_payload(Msg),
+      erlang:display(Payload),
       BinToken = hex_to_bin(Msg#apns_msg.device_token),
       apns_queue:in(State#state.queue, Msg),
       case send_payload(State, Msg#apns_msg.id, Msg#apns_msg.expiry,
